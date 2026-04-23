@@ -46,7 +46,7 @@ router.get('/', autenticacaoMiddleware, AgendamentoController.listar);
  *                 example: "2023-12-25"
  *               hora:
  *                 type: string
- *                 example: "14:00"
+ *                 example: "14:00" ok
  *     responses:
  *       201:
  *         description: Agendamento criado
