@@ -6,10 +6,18 @@ const SECRET = process.env.JWT_SECRET || 'chave_secreta_barba';
 
 class AutenticacaoController {
   registrar(req, res) {
-    const { nome, email, senha, cargo } = req.body;
+    const { nome, email, senha, cargo, admin_key } = req.body;
 
     if (!nome || !email || !senha) {
       return res.status(400).json({ erro: 'Campos obrigatórios ausentes' });
+    }
+
+    // Camada de Segurança: Proteção para criação de Admins via Chave Secreta
+    if (cargo === 'admin') {
+      const serverAdminKey = process.env.ADMIN_REGISTRATION_KEY;
+      if (admin_key !== serverAdminKey) {
+        return res.status(403).json({ erro: 'Chave de registro admin inválida ou ausente' });
+      }
     }
 
     const senhaCriptografada = bcrypt.hashSync(senha, 10);

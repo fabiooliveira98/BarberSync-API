@@ -19,3 +19,5 @@ yarn-error.log*
 # Sistema
 Thumbs.db
 .DS_Store
+
+docs/
