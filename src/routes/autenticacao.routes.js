@@ -28,6 +28,9 @@ const AutenticacaoController = require('../controllers/autenticacao.controller')
  *               cargo:
  *                 type: string
  *                 enum: [cliente, admin]
+ *               admin_key:
+ *                 type: string
+ *                 description: Chave secreta necessária apenas para o cargo admin
  *     responses:
  *       201:
  *         description: Usuário criado com sucesso

@@ -46,12 +46,14 @@ router.get('/', autenticacaoMiddleware, AgendamentoController.listar);
  *                 example: "2023-12-25"
  *               hora:
  *                 type: string
- *                 example: "14:00" ok
+ *                 example: "14:00"
  *     responses:
  *       201:
- *         description: Agendamento criado
+ *         description: Agendamento criado com sucesso
  *       400:
- *         description: Conflito de horário ou erro na data
+ *         description: Erro de validação (Data passada ou conflito de horário)
+ *       401:
+ *         description: Não autorizado (Token JWT ausente ou inválido)
  */
 router.post('/', autenticacaoMiddleware, AgendamentoController.criar);
 
