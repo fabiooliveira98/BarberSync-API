@@ -72,3 +72,66 @@ describe('US01 - Cadastro de Usuário', () => {
     });
 
 });
+
+describe('US02 - Login de Usuário', () => {
+
+    it('CT02.1 - Deve realizar login com sucesso e retornar um token', async () => {
+        const credenciais = {
+            email: 'teste@barbersync.com',
+            senha: 'senha123'
+        };
+
+        const response = await request(app)
+            .post('/autenticacao/login')
+            .send(credenciais);
+
+        expect(response.status).to.equal(200);
+        expect(response.body).to.have.property('token');
+        expect(response.body.usuario.nome).to.equal('Cliente de Teste');
+    });
+
+    it('CT02.2 - Não deve logar com senha incorreta', async () => {
+        const credenciaisErradas = {
+            email: 'teste@barbersync.com',
+            senha: 'senha_errada'
+        };
+
+        const response = await request(app)
+            .post('/autenticacao/login')
+            .send(credenciaisErradas);
+
+        expect(response.status).to.equal(401);
+        expect(response.body.erro).to.equal('Credenciais inválidas');
+    });
+
+    it('CT02.3 - Não deve logar com e-mail não cadastrado', async () => {
+        const usuarioInexistente = {
+            email: 'naoexiste@test.com',
+            senha: 'senha123'
+        };
+
+        const response = await request(app)
+            .post('/autenticacao/login')
+            .send(usuarioInexistente);
+
+        expect(response.status).to.equal(401);
+        expect(response.body.erro).to.equal('Credenciais inválidas');
+    });
+
+    it('CT02.4 - O token retornado deve ser um JWT válido', async () => {
+        const credenciais = {
+            email: 'teste@barbersync.com',
+            senha: 'senha123'
+        };
+
+        const response = await request(app)
+            .post('/autenticacao/login')
+            .send(credenciais);
+
+        const token = response.body.token;
+        const partes = token.split('.');
+        
+        expect(partes).to.have.lengthOf(3); // Um JWT tem 3 partes: Header.Payload.Signature
+    });
+
+});

@@ -10,7 +10,13 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "mocha tests/automation/*.test.js --exit"
+    "test": "set NODE_ENV=test&& mocha tests/automation/*.test.js --reporter mochawesome --reporter-options reportDir=docs/relatorios,inlineAssets=true --exit",
+    "test:auth": "set NODE_ENV=test&& mocha tests/automation/autenticacao.test.js --reporter mochawesome --reporter-options reportDir=docs/relatorios,inlineAssets=true --exit",
+    "test:barbeiros": "set NODE_ENV=test&& mocha tests/automation/barbeiros.test.js --reporter mochawesome --reporter-options reportDir=docs/relatorios,inlineAssets=true --exit",
+    "test:agendamentos": "set NODE_ENV=test&& mocha tests/automation/agendamentos.test.js --reporter mochawesome --reporter-options reportDir=docs/relatorios,inlineAssets=true --exit",
+    "test:meus-agendamentos": "set NODE_ENV=test&& mocha tests/automation/meus_agendamentos.test.js --reporter mochawesome --reporter-options reportDir=docs/relatorios,inlineAssets=true --exit",
+    "test:disponibilidade": "set NODE_ENV=test&& mocha tests/automation/disponibilidade.test.js --reporter mochawesome --reporter-options reportDir=docs/relatorios,inlineAssets=true --exit",
+    "test:admin": "set NODE_ENV=test&& mocha tests/automation/admin.test.js --reporter mochawesome --reporter-options reportDir=docs/relatorios,inlineAssets=true --exit"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +35,7 @@
   "devDependencies": {
     "chai": "^6.2.2",
     "mocha": "^11.7.5",
+    "mochawesome": "^7.1.4",
     "nodemon": "^3.1.14",
     "supertest": "^7.2.2"
   }
