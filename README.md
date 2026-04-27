@@ -7,6 +7,7 @@ API profissional para gestão de barbearias que centraliza agendamentos, control
 - **SQLite**: Banco de dados relacional leve e eficiente.
 - **JWT & Bcrypt**: Autenticação segura e criptografia de senhas.
 - **Mocha, Chai & Supertest**: Frameworks de testes automatizados e asserções.
+- **k6**: Testes de performance, stress e resiliência (Spike).
 - **Mochawesome**: Relatórios visuais de execução de testes.
 - **Swagger (OpenAPI)**: Documentação interativa de endpoints.
 
@@ -60,6 +61,13 @@ npm run test:barbeiros
 npm run test:agendamentos
 npm run test:disponibilidade
 npm run test:admin
+```
+## ⚙️ Como Executar os Testes de performance com k6
+```bash
+npm run test:perf:smoke  # Validação inicial
+npm run test:perf:load   # Carga (50 usuários)
+npm run test:perf:stress # Stress (300 usuários)
+npm run test:perf:spike  # Surto repentino
 ```
 
 ## 📄 Documentação
