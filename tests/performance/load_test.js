@@ -15,9 +15,10 @@ export const options = {
 
 export default function () {
   // Testando dois endpoints simultaneamente
+  const BASE_URL = __ENV.BASE_URL || 'http://localhost:3000';
   const responses = http.batch([
-    ['GET', 'http://localhost:3000/barbeiros'],
-    ['GET', 'http://localhost:3000/barbeiros/1/disponibilidade?data=2026-12-10'],
+    ['GET', `${BASE_URL}/barbeiros`],
+    ['GET', `${BASE_URL}/barbeiros/1/disponibilidade?data=2026-12-10`],
   ]);
 
   check(responses[0], {

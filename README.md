@@ -64,4 +64,5 @@ npm run test:admin
 
 ## 📄 Documentação
 - A documentação interativa pode ser acessada via Swagger (ao rodar o servidor).
+- [**Relatório de Performance**](docs/PERFORMANCE_REPORT.md): Resultados detalhados de stress e carga com k6.
 - Detalhes de User Stories e Casos de Teste estão na **Wiki** interna do projeto.

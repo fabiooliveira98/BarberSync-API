@@ -36,4 +36,4 @@ Sistema de API para gestão de agendamentos em barbearias, permitindo que client
     - **Cliente:** Pode gerenciar seu próprio perfil e seus agendamentos.
 
 ### RNF03 - Persistência
-- Os dados devem ser persistidos em um banco de dados (SQLite para facilidade de portfólio ou MongoDB).
+- Os dados devem ser persistidos em um banco de dados (SQLite ou MongoDB).

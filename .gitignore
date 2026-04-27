@@ -8,9 +8,9 @@ node_modules/
 src/database/*.sqlite
 
 # Relatórios e Scripts Temporários
-docs/relatorios/
-docs/WIKI_DOCUMENTATION.md
-docs/BUG_REPORT.md
+docs/reports/
+docs/qa/WIKI_DOCUMENTATION.md
+docs/qa/BUG_REPORT.md
 scratch/
 
 # Logs

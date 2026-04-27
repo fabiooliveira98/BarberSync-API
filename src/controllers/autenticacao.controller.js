@@ -1,8 +1,8 @@
-const db = require('../database/db');
+const UsuarioModel = require('../models/usuario.model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const SECRET = process.env.JWT_SECRET || 'chave_secreta_barba';
+const SECRET = process.env.JWT_SECRET;
 
 class AutenticacaoController {
   registrar(req, res) {
@@ -22,8 +22,7 @@ class AutenticacaoController {
 
     const senhaCriptografada = bcrypt.hashSync(senha, 10);
 
-    const query = `INSERT INTO usuarios (nome, email, senha, cargo) VALUES (?, ?, ?, ?)`;
-    db.run(query, [nome, email, senhaCriptografada, cargo || 'cliente'], function(err) {
+    UsuarioModel.create({ nome, email, senhaCriptografada, cargo }, function(err) {
       if (err) {
         if (err.message.includes('UNIQUE constraint failed')) {
           return res.status(400).json({ erro: 'E-mail já cadastrado' });
@@ -41,8 +40,7 @@ class AutenticacaoController {
       return res.status(400).json({ erro: 'Campos obrigatórios ausentes' });
     }
 
-    const query = `SELECT * FROM usuarios WHERE email = ?`;
-    db.get(query, [email], (err, usuario) => {
+    UsuarioModel.findByEmail(email, (err, usuario) => {
       if (err) return res.status(500).json({ erro: err.message });
       if (!usuario) return res.status(401).json({ erro: 'Credenciais inválidas' });
 

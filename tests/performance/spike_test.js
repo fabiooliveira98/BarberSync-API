@@ -13,7 +13,8 @@ export const options = {
 };
 
 export default function () {
-  const url = 'http://localhost:3000/barbeiros';
+  const BASE_URL = __ENV.BASE_URL || 'http://localhost:3000';
+  const url = `${BASE_URL}/barbeiros`;
   const res = http.get(url);
 
   check(res, {

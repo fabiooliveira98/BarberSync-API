@@ -11,7 +11,8 @@ export const options = {
 
 export default function () {
   // Testando o endpoint de listagem de barbeiros
-  const res = http.get('http://localhost:3000/barbeiros');
+  const BASE_URL = __ENV.BASE_URL || 'http://localhost:3000';
+  const res = http.get(`${BASE_URL}/barbeiros`);
   
   check(res, {
     'status é 200': (r) => r.status === 200,

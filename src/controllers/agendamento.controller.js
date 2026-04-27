@@ -1,20 +1,18 @@
-const db = require('../database/db');
+const AgendamentoModel = require('../models/agendamento.model');
 
 class AgendamentoController {
   listar(req, res) {
-    let query = 'SELECT * FROM agendamentos';
-    let parametros = [];
-
-    // Se não for admin, vê apenas os próprios agendamentos
     if (req.user.cargo !== 'admin') {
-      query += ' WHERE usuario_id = ?';
-      parametros.push(req.user.id);
+      AgendamentoModel.findByUsuarioId(req.user.id, (err, linhas) => {
+        if (err) return res.status(500).json({ erro: err.message });
+        res.json(linhas);
+      });
+    } else {
+      AgendamentoModel.findAll((err, linhas) => {
+        if (err) return res.status(500).json({ erro: err.message });
+        res.json(linhas);
+      });
     }
-
-    db.all(query, parametros, (err, linhas) => {
-      if (err) return res.status(500).json({ erro: err.message });
-      res.json(linhas);
-    });
   }
 
   criar(req, res) {
@@ -32,15 +30,13 @@ class AgendamentoController {
     }
 
     // Regra: Verificar conflito de horário para o barbeiro
-    const queryVerificacao = `SELECT * FROM agendamentos WHERE barbeiro_id = ? AND data = ? AND hora = ? AND status != 'cancelado'`;
-    db.get(queryVerificacao, [barbeiro_id, data, hora], (err, linha) => {
+    AgendamentoModel.checkConflict(barbeiro_id, data, hora, (err, linha) => {
       if (err) return res.status(500).json({ erro: err.message });
       if (linha) {
         return res.status(400).json({ erro: 'O barbeiro já possui um agendamento neste horário' });
       }
 
-      const queryInsercao = `INSERT INTO agendamentos (usuario_id, barbeiro_id, servico_id, data, hora) VALUES (?, ?, ?, ?, ?)`;
-      db.run(queryInsercao, [usuario_id, barbeiro_id, servico_id, data, hora], function(err) {
+      AgendamentoModel.create({ usuario_id, barbeiro_id, servico_id, data, hora }, function(err) {
         if (err) return res.status(500).json({ erro: err.message });
         res.status(201).json({ id: this.lastID, usuario_id, barbeiro_id, servico_id, data, hora, status: 'agendado' });
       });
