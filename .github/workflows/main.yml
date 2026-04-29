@@ -1,6 +1,10 @@
 name: Pipeline testes API
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+      - 'feat/**'
 jobs:
   tests:
     runs-on: ubuntu-latest
