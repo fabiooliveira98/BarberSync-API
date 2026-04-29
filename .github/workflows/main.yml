@@ -1,0 +1,30 @@
+name: Pipeline testes API
+on:
+  workflow_dispatch:
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    env:
+      PORT: 3000
+      JWT_SECRET: 'minha_chave_secreta_super_segura'
+      ADMIN_REGISTRATION_KEY: 'batman123'
+      NODE_ENV: test
+
+
+    steps:
+      - name: checkout do projeto
+        uses: actions/checkout@v4
+        
+        
+      - name: Instalando as depedencias
+        run: npm install
+
+        
+      - name: Executar Suíte de Testes (Mocha)
+        run: npm test
+        
+
+        
+        
+      
+      
